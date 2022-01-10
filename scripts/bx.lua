@@ -31,7 +31,7 @@ function using_bx()
 
 	configuration { "Release" }
 		defines {
-			"BX_CONFIG_DEBUG=0",
+			"BX_CONFIG_DEBUG=1",
 		}
 
 	configuration {}
@@ -99,7 +99,7 @@ project "bx"
 
 	configuration { "Release" }
 		defines {
-			"BX_CONFIG_DEBUG=0",
+			"BX_CONFIG_DEBUG=1",
 		}
 
 	configuration {}
