@@ -152,3 +152,58 @@ project "bx.bench"
 	configuration {}
 
 	strip()
+
+project "bx.bench"
+	kind "ConsoleApp"
+
+	debugdir (path.join(BX_DIR, "tests"))
+
+	includedirs {
+		path.join(BX_DIR, "include"),
+		BX_THIRD_PARTY_DIR,
+	}
+
+	files {
+		path.join(BX_DIR, "tests/*_bench.cpp"),
+		path.join(BX_DIR, "tests/*_bench.h"),
+		path.join(BX_DIR, "tests/dbg.*"),
+	}
+
+	links {
+		"bx",
+	}
+
+	configuration { "vs* or mingw*" }
+		links {
+			"psapi",
+		}
+
+	configuration { "android*" }
+		targetextension ".so"
+		linkoptions {
+			"-shared",
+		}
+
+	configuration { "linux-*" }
+		links {
+			"pthread",
+		}
+
+	configuration { "osx*" }
+		links {
+			"Cocoa.framework",
+		}
+
+	configuration { "Debug" }
+		defines {
+			"BX_CONFIG_DEBUG=1",
+		}
+
+	configuration { "Release" }
+		defines {
+			"BX_CONFIG_DEBUG=1",
+		}
+
+	configuration {}
+
+	strip()
