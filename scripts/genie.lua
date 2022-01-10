@@ -140,7 +140,7 @@ project "bx.bench"
 
 	configuration { "Release" }
 		defines {
-			"BX_CONFIG_DEBUG=0",
+			"BX_CONFIG_DEBUG=1",
 		}
 
 	configuration {}
