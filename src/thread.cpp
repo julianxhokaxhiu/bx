@@ -246,37 +246,6 @@ namespace bx
 			name[length] = 0;
 			SetThreadDescription(ti->m_handle, name);
 		}
-		else
-		{
-#	if BX_COMPILER_MSVC
-#		pragma pack(push, 8)
-			struct ThreadName
-			{
-				DWORD  type;
-				LPCSTR name;
-				DWORD  id;
-				DWORD  flags;
-			};
-#		pragma pack(pop)
-			ThreadName tn;
-			tn.type  = 0x1000;
-			tn.name  = m_name.getCPtr();
-			tn.id    = ti->m_threadId;
-			tn.flags = 0;
-
-			__try
-			{
-				RaiseException(0x406d1388
-					, 0
-					, sizeof(tn)/4
-					, reinterpret_cast<ULONG_PTR*>(&tn)
-					);
-			}
-			__except(EXCEPTION_EXECUTE_HANDLER)
-			{
-			}
-#	endif // BX_COMPILER_MSVC
-		}
 #endif // BX_PLATFORM_
 	}
 
