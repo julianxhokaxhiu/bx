@@ -105,33 +105,7 @@ namespace bx
 {
 	void debugBreak()
 	{
-#if BX_COMPILER_MSVC
-		__debugbreak();
-#elif BX_CPU_ARM
-		__builtin_trap();
-//		asm("bkpt 0");
-#elif BX_CPU_RISCV && (BX_COMPILER_GCC || BX_COMPILER_CLANG)
-		__asm__ volatile("ebreak");
-#elif BX_CPU_X86 && (BX_COMPILER_GCC || BX_COMPILER_CLANG)
-		// NaCl doesn't like int 3:
-		// NativeClient: NaCl module load failed: Validation failure. File violates Native Client safety rules.
-		__asm__ ("int $3");
-#elif BX_PLATFORM_EMSCRIPTEN
-		emscripten_log(0
-			| EM_LOG_CONSOLE
-			| EM_LOG_ERROR
-			| EM_LOG_C_STACK
-			| EM_LOG_JS_STACK
-			, "debugBreak!"
-			);
-		// Doing emscripten_debugger() disables asm.js validation due to an emscripten bug
-		//emscripten_debugger();
-		EM_ASM({ debugger; });
-#elif BX_COMPILER_GCC || BX_COMPILER_CLANG
-		__builtin_trap();
-#else
-#	error "Unknown BX_CPU_? / BX_COMPILER_?"
-#endif // BX
+		// Do nothing
 	}
 
 	bool isDebuggerPresent()
